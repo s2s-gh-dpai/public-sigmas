@@ -1,0 +1,22 @@
+title: Detection of LinPEAS Script Execution
+id: fad9c80c-5072-4e71-b1c9-c2d0644b751e
+status: experimental
+description: Detects the execution of the LinPEAS enumeration script commonly used by attackers for privilege escalation and system enumeration.
+references:
+  - https://www.microsoft.com/en-us/security/blog/2023/10/25/octo-tempest-crosses-boundaries-to-facilitate-extortion-encryption-and-destruction
+author: System Two Security
+date: 2024/06/25
+tags:
+  - attack.privilege_escalation
+logsource:
+  product: linux
+  category: process_creation
+detection:
+  selection:
+    CommandLine|contains|all:
+      - -a
+      - linpeas.sh
+  condition: selection
+falsepositives:
+  - Authorized security assessments and legitimate administrative activities that use LinPEAS for system enumeration.
+level: high

@@ -1,0 +1,21 @@
+title: Suspicious Social Media Sharing Activity
+id: 7c068086-8056-4605-8d1f-a7df9417d41b
+status: experimental
+description: Detects the sharing of content to LinkedIn and Facebook which may indicate data exfiltration or unauthorized disclosure of sensitive information.
+references:
+  - https://www.picussecurity.com/resource/blog/scattered-spider-leveraging-social-engineering-for-extortion-cisa-alert-aa23-320
+author: System Two Security
+date: 2024/06/25
+tags:
+  - attack.exfiltration
+logsource:
+  category: proxy
+detection:
+  selection:
+    cs-uri|contains|all:
+      - linkedin.com
+      - facebook.com
+  condition: selection
+falsepositives:
+  - Legitimate use of social media by employees for marketing or communication purposes.
+level: low

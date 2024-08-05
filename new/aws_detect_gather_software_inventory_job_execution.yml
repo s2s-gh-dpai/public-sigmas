@@ -1,0 +1,22 @@
+title: Detect AWS-GatherSoftwareInventory Job Execution
+id: 04d84eef-bf1d-46f5-a82f-43512ec95b90
+status: experimental
+description: Detects the execution of the AWS-GatherSoftwareInventory job against all EC2 instances which may indicate reconnaissance activity by LUCR-3.
+references:
+  - https://permiso.io/blog/lucr-3-scattered-spider-getting-saas-y-in-the-cloud
+author: System Two Security
+date: 2024/06/25
+tags:
+  - attack.reconnaissance
+logsource:
+  service: cloudtrail
+  product: aws
+detection:
+  selection:
+    eventName: SendCommand
+    eventSource: ssm.amazonaws.com
+    requestParameters.attribute: AWS-GatherSoftwareInventory
+  condition: selection
+falsepositives:
+  - Legitimate use of the AWS-GatherSoftwareInventory job by system administrators or automated scripts.
+level: high

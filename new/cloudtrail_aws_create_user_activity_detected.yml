@@ -1,0 +1,22 @@
+title: AWS Create User Activity Detected
+id: a7b4765a-ec53-4c72-b7c6-8b4064519b69
+status: experimental
+description: Detects the creation of a new user in AWS, which could indicate an attempt to establish persistence or maintain presence in the compromised environment.
+references:
+  - https://permiso.io/blog/lucr-3-scattered-spider-getting-saas-y-in-the-cloud
+author: System Two Security
+date: 2024/06/25
+tags:
+  - attack.persistence
+  - attack.t1136
+logsource:
+  service: cloudtrail
+  product: aws
+detection:
+  selection:
+    eventName: CreateUser
+    eventSource: iam.amazonaws.com
+  condition: selection
+falsepositives:
+  - Legitimate user creation as part of normal administrative tasks
+level: high

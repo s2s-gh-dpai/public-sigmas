@@ -1,0 +1,22 @@
+title: Detect AWS Serial Console Access and SSH Key Sending
+id: a47762f4-ebca-460b-a496-0675800a3c99
+status: experimental
+description: Detects the enabling of serial console access and sending of SSH public key for serial console access in AWS, which may indicate an attempt to establish a hardware-based serial connection to an EC2 instance for evasion.
+references:
+  - https://permiso.io/blog/lucr-3-scattered-spider-getting-saas-y-in-the-cloud
+author: System Two Security
+date: 2024/06/25
+tags:
+  - attack.persistence
+logsource:
+  service: cloudtrail
+  product: aws
+detection:
+  selection:
+    eventName|contains|all:
+      - EnableSerialConsoleAccess
+      - SendSerialConsoleSSHPublicKey
+  condition: selection
+falsepositives:
+  - Legitimate use of serial console access by system administrators
+level: high

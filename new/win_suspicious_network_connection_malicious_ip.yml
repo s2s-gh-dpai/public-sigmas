@@ -1,0 +1,26 @@
+title: Suspicious Network Connection to Known Malicious IP
+id: 50dbb1a8-39b8-447f-bb9b-8270c0601b44
+status: experimental
+description: Detects network connections to a known malicious IP address on specific ports by binaries with a known SHA256 hash
+references:
+  - https://www.crowdstrike.com/blog/analysis-of-intrusion-campaign-targeting-telecom-and-bpo-companies
+author: System Two Security
+date: 2024/07/02
+tags:
+  - attack.command_and_control
+logsource:
+  product: windows
+  category: network_connection
+detection:
+  selection:
+    DestinationIp: 67.43.235.122
+    DestinationPort:
+      - '8888'
+      - '4444'
+    Image|endswith:
+      - \\mpbec.exe
+      - \\mp.exe
+  condition: selection
+falsepositives:
+  - Legitimate use of the binary with the same hash on the specified ports to the specified IP address, which is unlikely.
+level: high

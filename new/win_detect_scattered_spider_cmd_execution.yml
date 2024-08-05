@@ -1,0 +1,23 @@
+title: Detect Scattered Spider Command Line Execution
+id: 586e511c-77e6-4ee2-8674-1196146a0e5b
+status: experimental
+description: Detects the execution of cmd.exe which is indicative of Scattered Spider attack group activity.
+references:
+  - https://www.vectra.ai/blog/vectra-ai-scattered-spider
+author: System Two Security
+date: 2024/07/08
+tags:
+  - attack.execution
+  - attack.t1059.003
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection:
+    CommandLine|contains|all:
+      - cmd.exe
+      - C:\\Windows\\System32\\cmd.exe
+  condition: selection
+falsepositives:
+  - Legitimate administrative activity that involves the use of cmd.exe.
+level: high

@@ -1,0 +1,21 @@
+title: Detect AWS IAM Policy Manipulation via ReplaceIamInstanceProfileAssociation
+id: 3c651106-c721-4b91-b165-c81e175452a7
+status: experimental
+description: Detects the modification of IAM instance profile associations which can indicate privilege escalation attempts in AWS environments.
+references:
+  - https://permiso.io/blog/lucr-3-scattered-spider-getting-saas-y-in-the-cloud
+author: System Two Security
+date: 2024/06/25
+tags:
+  - attack.privilege_escalation
+  - attack.t1098.003
+logsource:
+  service: cloudtrail
+  product: aws
+detection:
+  selection:
+    eventName: ReplaceIamInstanceProfileAssociation
+  condition: selection
+falsepositives:
+  - Legitimate IAM instance profile association changes by administrators
+level: high

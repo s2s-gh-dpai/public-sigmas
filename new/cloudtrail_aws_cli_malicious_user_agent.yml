@@ -1,0 +1,24 @@
+title: Detection of AWS CLI User Agent Associated with Adversary Activity
+id: 4ee94950-ddb7-4f0d-b2cf-9ab139eb5c6a
+status: experimental
+description: Detects the use of a specific AWS CLI user agent string associated with adversary activity in AWS CloudTrail logs.
+references:
+  - https://www.crowdstrike.com/blog/analysis-of-intrusion-campaign-targeting-telecom-and-bpo-companies
+author: System Two Security
+date: 2024/07/02
+tags:
+  - attack.execution
+logsource:
+  service: cloudtrail
+  product: aws
+detection:
+  selection:
+    userAgent|contains|all:
+      - Python/3.9.2
+      - Linux/5.10.0-kali5-amd64
+      - aws-cli/1.19.59
+      - botocore/1.27.43
+  condition: selection
+falsepositives:
+  - Legitimate use of the AWS CLI with the same version from a Linux system with the specified user agent string.
+level: high

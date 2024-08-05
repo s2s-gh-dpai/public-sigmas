@@ -1,0 +1,21 @@
+title: Detection of Insomnia.exe Execution
+id: 09a5b6c6-fc70-4384-b0d7-aa9d31140116
+status: experimental
+description: Detects the execution or creation of a known malicious file "insomnia.exe" with a specific SHA256 hash value.
+references:
+  - https://www.crowdstrike.com/blog/analysis-of-intrusion-campaign-targeting-telecom-and-bpo-companies
+author: System Two Security
+date: 2024/07/02
+tags:
+  - attack.execution
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection:
+    Image|endswith: \insomnia.exe
+    sha256: acadf15ec363fe3cc373091cbe879e64f935139363a8e8df18fd9e59317cc918
+  condition: selection
+falsepositives:
+  - Unknown. Any match should be investigated.
+level: high

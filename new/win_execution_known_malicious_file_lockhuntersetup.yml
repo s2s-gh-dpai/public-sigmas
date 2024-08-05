@@ -1,0 +1,21 @@
+title: Execution of Known Malicious File lockhuntersetup_3-4-3.exe
+id: cabc9c70-df48-4b9e-89cc-8f1d0ba0067c
+status: experimental
+description: Detects the execution of a known malicious file with a specific SHA256 hash
+references:
+  - https://www.crowdstrike.com/blog/analysis-of-intrusion-campaign-targeting-telecom-and-bpo-companies
+author: System Two Security
+date: 2024/07/02
+tags:
+  - attack.execution
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection:
+    Image|endswith: \lockhuntersetup_3-4-3.exe
+    sha256: 982dda5eec52dd54ff6b0b04fd9ba8f4c566534b78f6a46dada624af0316044e
+  condition: selection
+falsepositives:
+  - Unknown
+level: high

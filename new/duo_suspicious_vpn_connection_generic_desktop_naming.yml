@@ -1,0 +1,24 @@
+title: Suspicious VPN Connection with Generic Desktop Naming Pattern
+id: 4f9e6032-44d6-4836-8099-306b29ccdb6a
+status: experimental
+description: Detects VPN connections where the client hostname follows a generic naming pattern often used by adversaries (DESKTOP- followed by 7 alphanumeric characters).
+references:
+  - https://www.crowdstrike.com/blog/analysis-of-intrusion-campaign-targeting-telecom-and-bpo-companies
+author: System Two Security
+date: 2024/07/02
+tags:
+  - attack.persistence
+logsource:
+  product: cisco
+  service: duo
+detection:
+  selection:
+    event_type: authentication
+    reason|startswith: DESKTOP-
+    reason|contains|all:
+      - DESKTOP-
+      - '[A-Za-z0-9]{7}'
+  condition: selection
+falsepositives:
+  - Legitimate connections from systems following a similar naming convention by coincidence.
+level: high

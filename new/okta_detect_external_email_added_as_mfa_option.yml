@@ -1,0 +1,23 @@
+title: Detect External Email Added as MFA Option
+id: 54d52db3-f476-497d-b23f-c31da8898e9b
+status: experimental
+description: Detects when an external email is added as a multi-factor authentication option, which could indicate account takeover or insider threat activity.
+references:
+  - https://permiso.io/blog/lucr-3-scattered-spider-getting-saas-y-in-the-cloud
+author: System Two Security
+date: 2024/06/25
+tags:
+  - attack.persistence
+  - attack.t1621
+logsource:
+  product: okta
+  service: okta
+detection:
+  selection:
+    eventtype: user.mfa.factor.activate
+    outcome.result: SUCCESS
+    target.user.display.name|contains: '@'
+  condition: selection
+falsepositives:
+  - Legitimate addition of an external email to MFA by the user or admin
+level: high

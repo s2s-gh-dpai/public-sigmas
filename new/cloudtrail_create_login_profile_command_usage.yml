@@ -1,0 +1,20 @@
+title: AWS CreateLoginProfile Command Usage
+id: fc264f93-6842-4942-867f-aad36d6f8854
+status: experimental
+description: Detects the use of CreateLoginProfile command in AWS which is used to create a password for the specified IAM user, allowing the user to access AWS services through the AWS Management Console.
+references:
+  - https://permiso.io/blog/lucr-3-scattered-spider-getting-saas-y-in-the-cloud
+author: System Two Security
+date: 2024/06/25
+tags:
+  - attack.privilege_escalation
+logsource:
+  service: cloudtrail
+  product: aws
+detection:
+  selection:
+    eventName|startswith: CreateLoginProfile
+  condition: selection
+falsepositives:
+  - Legitimate administrative activity that involves creating login profiles for new IAM users.
+level: high

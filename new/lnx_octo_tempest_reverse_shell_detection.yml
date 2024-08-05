@@ -1,0 +1,39 @@
+title: Detection of Octo Tempest Reverse Shell Activity
+id: f49c4da4-362b-4542-9370-643765a02f34
+status: experimental
+description: Detects the use of specific reverse shell techniques used by the threat group Octo Tempest, as described in the CTI report. This includes PowerShell and Python reverse shell commands targeting Windows and Linux endpoints.
+references:
+  - https://www.microsoft.com/en-us/security/blog/2023/10/25/octo-tempest-crosses-boundaries-to-facilitate-extortion-encryption-and-destruction
+author: System Two Security
+date: 2024/06/25
+tags:
+  - attack.command_and_control
+logsource:
+  product: linux
+  category: process_creation
+detection:
+  powershell_reverse_shell:
+    Image|endswith:
+      - \powershell.exe
+      - \pwsh.exe
+    CommandLine|contains|all:
+      - 85.217.144.206
+      - -W Hidden
+      - System.Net.Sockets.TCPClient
+      - -NoP
+      - '80'
+      - -Enc
+      - -NonI
+  python_reverse_shell:
+    CommandLine|contains:
+      - pty.spawn("/bin/sh")
+      - socket.SOCK_STREAM
+      - socket.socket
+      - socket.AF_INET
+      - python -c
+      - s.connect(("85.217.144.210",80))
+  condition: powershell_reverse_shell or python_reverse_shell
+falsepositives:
+  - Legitimate use of reverse shells by system administrators for remote management, although this is uncommon and should be validated.
+  - Legitimate use of encoded PowerShell commands that are not related to reverse shells.
+level: high

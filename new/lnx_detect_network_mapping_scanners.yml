@@ -1,0 +1,26 @@
+title: Detection of Network Mapping with Angry IP and Port Scanners
+id: 7fb94b7a-703e-44b5-a6de-495844226904
+status: experimental
+description: Detects the use of network mapping tools such as Angry IP Scanner and various port scanners which may indicate reconnaissance activity by an adversary.
+references:
+  - https://unit42.paloaltonetworks.com/muddled-libra
+author: System Two Security
+date: 2024/06/25
+tags:
+  - attack.reconnaissance
+  - attack.t1595
+logsource:
+  product: linux
+  service: auditd
+detection:
+  selection:
+    exe|contains|all:
+      - zenmap
+      - zmap
+      - ipscan
+      - masscan
+      - nmap
+  condition: selection
+falsepositives:
+  - Authorized network scanning activity
+level: high

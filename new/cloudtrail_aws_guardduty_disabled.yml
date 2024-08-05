@@ -1,0 +1,21 @@
+title: AWS GuardDuty Disabled
+id: 77f25b8f-63ee-4877-a991-b597d87089bf
+status: experimental
+description: Detects the disabling of AWS GuardDuty, which is a potential indicator of an attacker trying to evade detection.
+references:
+  - https://permiso.io/blog/lucr-3-scattered-spider-getting-saas-y-in-the-cloud
+author: System Two Security
+date: 2024/06/25
+tags:
+  - attack.defense_evasion
+logsource:
+  service: cloudtrail
+  product: aws
+detection:
+  selection:
+    eventName|contains: DisableGuardDutyDetector
+    eventSource|contains: guardduty.amazonaws.com
+  condition: selection
+falsepositives:
+  - Legitimate administrative activity that involves disabling GuardDuty for valid reasons.
+level: high

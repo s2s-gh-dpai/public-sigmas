@@ -1,0 +1,21 @@
+title: Execution of Malicious Fleet Deck Binary Detected
+id: 65d7604b-0bd0-4733-8bd2-f2192dd72aef
+status: experimental
+description: Detects the execution or creation of a known malicious Fleet Deck binary based on its SHA256 hash value.
+references:
+  - https://www.crowdstrike.com/blog/analysis-of-intrusion-campaign-targeting-telecom-and-bpo-companies
+author: System Two Security
+date: 2024/07/02
+tags:
+  - attack.execution
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection:
+    Image|endswith: \<redacted>.exe
+    sha256: 3ea2d190879c8933363b222c686009b81ba8af9eb6ae3696d2f420e187467f08
+  condition: selection
+falsepositives:
+  - Unknown. Any match should be investigated as it is based on a specific hash value of a known malicious file.
+level: high

@@ -1,0 +1,27 @@
+title: Detection of Mimikatz, ADRecon, and Covert Tunneling Tools
+id: 88c192d2-c5ff-4d42-adbb-cf2fc40dc7e6
+status: experimental
+description: Detects the download and use of Mimikatz, ADRecon, and covert tunneling tools such as NGROK, RSOCX, and Localtonet which are indicative of an adversary presence in the network.
+references:
+  - https://cloud.google.com/blog/topics/threat-intelligence/unc3944-targets-saas-applications
+author: System Two Security
+date: 2024/06/25
+tags:
+  - attack.persistence
+  - attack.t1040
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection:
+    CommandLine|contains:
+      - rsocx
+      - adrecon
+      - ngrok
+      - localtonet
+      - mimikatz
+  condition: selection
+falsepositives:
+  - Legitimate use of network tunneling tools by developers or system administrators
+  - Authorized security testing or penetration testing activities
+level: high

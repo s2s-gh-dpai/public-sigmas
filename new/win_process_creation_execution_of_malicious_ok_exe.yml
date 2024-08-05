@@ -1,0 +1,21 @@
+title: Execution of Malicious ok.exe
+id: 5d507cf1-4e7f-4346-908f-ba8e1518030d
+status: experimental
+description: Detects the execution of a known malicious binary "ok.exe" with a specific SHA256 hash
+references:
+  - https://www.crowdstrike.com/blog/analysis-of-intrusion-campaign-targeting-telecom-and-bpo-companies
+author: System Two Security
+date: 2024/07/02
+tags:
+  - attack.execution
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection:
+    Image|endswith: \ok.exe
+    sha256: 4188736108d2b73b57f63c0b327fb5119f82e94ff2d6cd51e9ad92093023ec93
+  condition: selection
+falsepositives:
+  - Unknown. Any match should be investigated.
+level: high

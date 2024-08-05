@@ -1,0 +1,20 @@
+title: Suspicious Data Exfiltration to transfer.sh
+id: 06a630d7-37ba-4a4b-9f36-f914bc003004
+status: experimental
+description: Detects data exfiltration attempts to the transfer.sh service, which may indicate command and control activity or data theft.
+references:
+  - https://www.crowdstrike.com/blog/analysis-of-intrusion-campaign-targeting-telecom-and-bpo-companies
+author: System Two Security
+date: 2024/07/02
+tags:
+  - attack.exfiltration
+logsource:
+  product: zeek
+  service: http
+detection:
+  selection:
+    uri|contains: transfer.sh
+  condition: selection
+falsepositives:
+  - Legitimate use of transfer.sh by developers or system administrators for file sharing.
+level: high

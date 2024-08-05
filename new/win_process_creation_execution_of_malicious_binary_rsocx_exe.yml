@@ -1,0 +1,21 @@
+title: Execution of Known Malicious Binary rsocx.exe
+id: 4d87a33a-d1a0-48fe-9195-58303c19c6e8
+status: experimental
+description: Detects the execution of a known malicious binary rsocx.exe with a specific SHA256 hash value.
+references:
+  - https://www.crowdstrike.com/blog/analysis-of-intrusion-campaign-targeting-telecom-and-bpo-companies
+author: System Two Security
+date: 2024/07/02
+tags:
+  - attack.command_and_control
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection:
+    Image|endswith: \rsocx.exe
+    sha256: 648c2067ef3d59eb94b54c43e798707b030e0383b3651bcc6840dae41808d3a9
+  condition: selection
+falsepositives:
+  - Unknown. Any execution of this file should be considered suspicious.
+level: high

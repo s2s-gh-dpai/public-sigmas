@@ -1,0 +1,23 @@
+title: AWS CloudTrail Stop Logging Activity
+id: 4d9c6940-2e3c-45cf-a520-470e82c4043e
+status: experimental
+description: Detects the execution of DeleteTrail and StopLogging actions which stop AWS CloudTrail logging
+references:
+  - https://permiso.io/blog/lucr-3-scattered-spider-getting-saas-y-in-the-cloud
+author: System Two Security
+date: 2024/06/25
+tags:
+  - attack.t1562.008
+  - attack.defense_evasion
+logsource:
+  service: cloudtrail
+  product: aws
+detection:
+  selection:
+    eventName|contains|all:
+      - DeleteTrail
+      - StopLogging
+  condition: selection
+falsepositives:
+  - Legitimate CloudTrail logging configuration changes by authorized personnel
+level: high

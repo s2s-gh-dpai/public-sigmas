@@ -1,0 +1,31 @@
+title: 'Octo Tempest Compromise: Security Product Arsenal Sabotage via Mailbox Rule Modification'
+id: fb8c0796-a336-413f-bd26-7521c2e3bac1
+status: experimental
+description: Detects the creation of malicious inbox rules that automatically delete emails from vendors, which could indicate a compromise by the Octo Tempest threat actor.
+references:
+  - https://www.microsoft.com/en-us/security/blog/2023/10/25/octo-tempest-crosses-boundaries-to-facilitate-extortion-encryption-and-destruction
+author: System Two Security
+date: 2024/06/25
+tags:
+  - attack.defense_evasion
+  - attack.t1564.008
+logsource:
+  service: exchange
+  product: m365
+detection:
+  selection:
+    eventName: New-InboxRule
+    eventSource: Exchange
+    status: Succeeded
+    eventName|contains|all:
+      - Force
+      - DeleteMessage
+      - StopProcessingRules
+      - BodyContainsWords
+      - New-InboxRule
+      - AlwaysDeleteOutlookRulesBlob
+      - Name
+  condition: selection
+falsepositives:
+  - Legitimate creation of inbox rules that match the criteria by mistake or for valid reasons.
+level: high

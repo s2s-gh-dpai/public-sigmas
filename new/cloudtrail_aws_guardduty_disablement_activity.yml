@@ -1,0 +1,23 @@
+title: AWS GuardDuty Disablement Activity
+id: 6c616d74-40bf-4094-916b-586df2047322
+status: experimental
+description: Detects the use of commands to disable AWS GuardDuty by disassociating from master account, deleting invitations, and deleting detectors.
+references:
+  - https://permiso.io/blog/lucr-3-scattered-spider-getting-saas-y-in-the-cloud
+author: System Two Security
+date: 2024/06/25
+tags:
+  - attack.defense_evasion
+logsource:
+  service: cloudtrail
+  product: aws
+detection:
+  selection:
+    eventName|contains|all:
+      - DisassociateFromMasterAccount
+      - DeleteInvitations
+      - DeleteDetector
+  condition: selection
+falsepositives:
+  - Legitimate GuardDuty configuration changes by authorized personnel
+level: high

@@ -1,0 +1,23 @@
+title: Creation of ESX Admins Group for Privilege Escalation
+id: 8fc323fc-38b2-47c5-8d8a-01aa9dc51a85
+status: experimental
+description: Detects the creation of a group named "ESX Admins" in the domain, which is associated with a vulnerability exploited by ransomware operators to gain full administrative access to domain-joined ESXi hypervisors.
+references:
+  - https://www.microsoft.com/en-us/security/blog/2024/07/29/ransomware-operators-exploit-esxi-hypervisor-vulnerability-for-mass-encryption
+author: System Two Security
+date: 2024/07/30
+tags:
+  - attack.privilege_escalation
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection:
+    CommandLine|contains|all:
+      - net group "ESX Admins"
+      - /add
+      - /domain
+  condition: selection
+falsepositives:
+  - Legitimate creation of a group named "ESX Admins" by administrators for non-malicious purposes.
+level: high

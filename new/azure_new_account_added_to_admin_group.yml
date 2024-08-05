@@ -1,0 +1,23 @@
+title: New Account Added to Admin Group
+id: f113ca67-d6a1-4146-b80f-b9a6c22c512b
+status: experimental
+description: Detects when a new account is added to an admin group in Azure Active Directory
+references:
+  - https://www.microsoft.com/en-us/security/blog/2023/10/25/octo-tempest-crosses-boundaries-to-facilitate-extortion-encryption-and-destruction
+author: System Two Security
+date: 2024/06/25
+tags:
+  - attack.privilege_escalation
+logsource:
+  product: azure
+  service: auditlogs
+detection:
+  selection:
+    ActivityDisplayName: Add member to role
+    TargetResources.modifiedProperties.newValue|contains|all:
+      - 62e90394-69f5-4237-9190-012177145e10
+      - '#microsoft.graph.group'
+  condition: selection
+falsepositives:
+  - Legitimate administrative activity that follows change management procedures
+level: high

@@ -1,0 +1,23 @@
+title: Detection of RustScan Execution from Docker Container on ESXi Appliance
+id: 586ca0a8-16ea-4dfb-9d40-f29e3d9f774d
+status: experimental
+description: Detects the execution of the RustScan port scanner tool from a Docker container running on an ESXi appliance, which may indicate adversarial reconnaissance activity.
+references:
+  - https://www.crowdstrike.com/blog/analysis-of-intrusion-campaign-targeting-telecom-and-bpo-companies
+author: System Two Security
+date: 2024/07/02
+tags:
+  - attack.reconnaissance
+logsource:
+  product: linux
+  category: process_creation
+detection:
+  selection:
+    CommandLine|contains|all:
+      - docker
+      - rustscan
+      - run
+  condition: selection
+falsepositives:
+  - Legitimate use of RustScan in Docker containers by system administrators or security professionals for network scanning purposes.
+level: high

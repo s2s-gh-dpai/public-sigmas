@@ -1,0 +1,20 @@
+title: Detection of PCUnlocker ISO to Reset Local Administrator Passwords
+id: c83dd53f-70ec-40ae-a248-fd46f19313c6
+status: experimental
+description: Detects the mounting of a PCUnlocker ISO image used to reset local administrator passwords, which may indicate an attempt to bypass normal domain controls.
+references:
+  - https://cloud.google.com/blog/topics/threat-intelligence/unc3944-targets-saas-applications
+author: System Two Security
+date: 2024/06/25
+tags:
+  - attack.privilege_escalation
+logsource:
+  product: windows
+  category: file_event
+detection:
+  selection:
+    TargetFilename|endswith: \pcunlocker.iso
+  condition: selection
+falsepositives:
+  - Legitimate administrative activities that involve the use of PCUnlocker or similar tools for password recovery.
+level: high

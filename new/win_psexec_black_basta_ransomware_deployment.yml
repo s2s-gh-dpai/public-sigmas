@@ -1,0 +1,23 @@
+title: Black Basta Ransomware Deployment via PsExec
+id: d3f2c201-3d5c-492b-9de2-eb2f8f72f888
+status: experimental
+description: Detects the use of PsExec for ransomware deployment, which is a common lateral movement tool used by attackers.
+references:
+  - https://www.microsoft.com/en-us/security/blog/2024/07/29/ransomware-operators-exploit-esxi-hypervisor-vulnerability-for-mass-encryption
+author: System Two Security
+date: 2024/07/30
+tags:
+  - attack.lateral_movement
+  - attack.t1569.002
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection:
+    CommandLine|contains|all:
+      - \\\\
+      - psexec
+  condition: selection
+falsepositives:
+  - Legitimate administrative activities that use PsExec.
+level: high

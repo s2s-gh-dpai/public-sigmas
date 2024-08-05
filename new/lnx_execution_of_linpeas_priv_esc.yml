@@ -1,0 +1,20 @@
+title: Execution of linpeas.sh Privilege Escalation Script
+id: 9ac7e239-a02a-4db4-923c-3318e13a8b94
+status: experimental
+description: Detects the execution of the linpeas.sh script which is commonly used for local privilege escalation
+references:
+  - https://www.crowdstrike.com/blog/analysis-of-intrusion-campaign-targeting-telecom-and-bpo-companies
+author: System Two Security
+date: 2024/07/02
+tags:
+  - attack.privilege_escalation
+logsource:
+  product: linux
+  category: process_creation
+detection:
+  selection:
+    CommandLine|contains: linpeas.sh
+  condition: selection
+falsepositives:
+  - Legitimate use of linpeas.sh by system administrators for auditing and troubleshooting
+level: high
